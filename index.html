@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master Japanese with ir-rice-istible learning! Revolutionary gamified Japanese lessons coming soon.">
+    <title>Onigiri - Something New is Cooking</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-orange: #E56E0C;
+            --primary-navy: #333F72;
+            --bg-cream: #faf5ef;
+            --white: #ffffff;
+            --text-dark: #2d2d2d;
+            --text-muted: #666666;
+            --shadow: 0 10px 30px rgba(51, 63, 114, 0.1);
+            --shadow-lg: 0 20px 40px rgba(51, 63, 114, 0.15);
+            --radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(250, 245, 239, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(229, 110, 12, 0.1);
+            transition: var(--transition);
+        }
+        
+        .header.scrolled {
+            background: rgba(250, 245, 239, 0.98);
+            box-shadow: var(--shadow);
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+         .logo::before {
+             content: '';
+             display: inline-block;
+             width: 3rem;
+             height: 3rem;
+             background-image: url('assets/ONIGIRI.svg');
+             background-size: contain;
+             background-repeat: no-repeat;
+             background-position: center;
+             margin-right: 0.75rem;
+         }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--primary-navy);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        
+         /* Main Container */
+         .main-container {
+             min-height: 100vh;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             padding: 2rem;
+             padding-top: 6rem;
+             background-image: url('assets/file.svg');
+             background-size: cover;
+             background-position: center;
+             background-repeat: no-repeat;
+         }
+        
+         .hero {
+             max-width: 1400px;
+             width: 100%;
+             display: grid;
+             grid-template-columns: 1.2fr 0.8fr;
+             gap: 4rem;
+             align-items: center;
+         }
+        
+        /* Content Section */
+        .hero-content {
+            animation: slideInLeft 1s ease-out;
+        }
+        
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            color: var(--primary-navy);
+            margin-bottom: 2rem;
+            line-height: 1.1;
+        }
+        
+        .highlight {
+            color: var(--primary-orange);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-orange), #ff8c42);
+            border-radius: 3px;
+            opacity: 0.3;
+            animation: underlineGrow 2s ease-out;
+        }
+        
+        @keyframes underlineGrow {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+        
+        /* Countdown */
+        .countdown-container {
+            margin-bottom: 3rem;
+        }
+        
+         .countdown-title {
+             font-size: 1.1rem;
+             font-weight: 600;
+             color: var(--primary-navy);
+             margin-bottom: 1.5rem;
+             text-align: left;
+         }
+        
+         .countdown {
+             display: grid;
+             grid-template-columns: repeat(4, 1fr);
+             gap: 1.5rem;
+             max-width: 600px;
+         }
+        
+        .countdown-item {
+            background: var(--white);
+            border: 3px solid rgba(229, 110, 12, 0.1);
+            border-radius: var(--radius);
+            padding: 2rem 1rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(229, 110, 12, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .countdown-item:hover {
+            border-color: var(--primary-orange);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .countdown-item:hover::before {
+            left: 100%;
+        }
+        
+        .countdown-number {
+            display: block;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .countdown-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* CTA Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, var(--primary-navy), #4a5a8a);
+            color: var(--white);
+            padding: 1.25rem 3rem;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px rgba(51, 63, 114, 0.3);
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Visual Section */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: slideInRight 1s ease-out;
+            position: relative;
+        }
+        
+      
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        /* Onigiri Character */
+        .onigiri {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 160px;
+            background: #f8f4f0;
+            border-radius: 50% 50% 45% 45%;
+            border: 4px solid #2d2d2d;
+            z-index: 10;
+            animation: bounce 3s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+        
+        /* Onigiri Face */
+        .onigiri::before {
+            content: '';
+            position: absolute;
+            top: 45px;
+            left: 45px;
+            width: 8px;
+            height: 8px;
+            background: #2d2d2d;
+            border-radius: 50%;
+            box-shadow: 25px 0 0 #2d2d2d, 12.5px 20px 0 #2d2d2d;
+        }
+        
+        /* Onigiri filling */
+        .onigiri::after {
+            content: '';
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: #d97706;
+            border-radius: 50%;
+            border: 3px solid #2d2d2d;
+        }
+        
+        /* Rice texture spots */
+        .rice-spot {
+            position: absolute;
+            background: #e8e4e0;
+            border-radius: 50%;
+        }
+        
+        .rice-spot:nth-child(1) {
+            width: 12px;
+            height: 12px;
+            top: 30px;
+            left: 25px;
+        }
+        
+        .rice-spot:nth-child(2) {
+            width: 8px;
+            height: 8px;
+            top: 25px;
+            right: 30px;
+        }
+        
+        .rice-spot:nth-child(3) {
+            width: 10px;
+            height: 10px;
+            bottom: 40px;
+            left: 20px;
+        }
+        
+        .rice-spot:nth-child(4) {
+            width: 6px;
+            height: 6px;
+            bottom: 35px;
+            right: 25px;
+        }
+        
+        .rice-spot:nth-child(5) {
+            width: 9px;
+            height: 9px;
+            top: 50px;
+            right: 45px;
+        }
+        
+        /* Onigiri feet */
+        .onigiri-foot {
+            position: absolute;
+            bottom: -8px;
+            width: 20px;
+            height: 12px;
+            background: #2d2d2d;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .onigiri-foot.left {
+            left: 55px;
+        }
+        
+        .onigiri-foot.right {
+            right: 55px;
+        }
+        
+        /* Ground/Hills */
+      
+        
+        .ground::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: -20px;
+            right: -20px;
+            height: 60px;
+            background: linear-gradient(135deg, #d97706 0%, #E56E0C 100%);
+            border-radius: 50px;
+            opacity: 0.7;
+        }
+        
+        .ground::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50px;
+            right: 80px;
+            height: 40px;
+            background: linear-gradient(135deg, #ffb366 0%, #E56E0C 100%);
+            border-radius: 30px;
+            opacity: 0.5;
+        }
+        
+        /* Background hills */
+        .bg-hill {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(229, 110, 12, 0.3) 0%, rgba(255, 140, 66, 0.2) 100%);
+            border-radius: 50px;
+        }
+        
+        .bg-hill:nth-child(1) {
+            top: 100px;
+            right: -50px;
+            width: 200px;
+            height: 80px;
+            transform: rotate(15deg);
+        }
+        
+        .bg-hill:nth-child(2) {
+            top: 80px;
+            left: -30px;
+            width: 150px;
+            height: 60px;
+            transform: rotate(-10deg);
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float-particle 8s infinite ease-in-out;
+        }
+        
+        .particle:nth-child(7) {
+            top: 50px;
+            right: 80px;
+            animation-delay: -2s;
+        }
+        
+        .particle:nth-child(8) {
+            top: 30px;
+            right: 120px;
+            animation-delay: -4s;
+        }
+        
+        .particle:nth-child(9) {
+            top: 70px;
+            right: 40px;
+            animation-delay: -6s;
+        }
+        
+        @keyframes float-particle {
+            0%, 100% { transform: translateY(0px); opacity: 0.7; }
+            50% { transform: translateY(-20px); opacity: 1; }
+        }
+        
+        /* Waitlist Section */
+        .waitlist-section {
+            background: var(--white);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-top: 4rem;
+            box-shadow: var(--shadow-lg);
+            border: 3px solid rgba(229, 110, 12, 0.1);
+            text-align: center;
+        }
+        
+        .waitlist-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+        }
+        
+        .waitlist-section p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+        
+        .waitlist-form {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .email-input {
+            padding: 1.25rem 1.5rem;
+            border: 3px solid rgba(229, 110, 12, 0.2);
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            background: var(--bg-cream);
+            transition: var(--transition);
+        }
+        
+        .email-input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(229, 110, 12, 0.1);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-orange), #ff8c42);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            padding: 1.25rem 2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        /* Animations */
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+            
+            .hero-visual {
+                order: -1;
+            }
+            
+            
+            .onigiri {
+                width: 140px;
+                height: 120px;
+                bottom: 90px;
+            }
+            
+            .onigiri::after {
+                top: 55px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .main-container {
+                padding: 1rem;
+                padding-top: 5rem;
+            }
+            
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .countdown-item {
+                padding: 1.5rem 0.5rem;
+            }
+            
+            .countdown-number {
+                font-size: 2.5rem;
+            }
+            
+            .waitlist-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .waitlist-section {
+                padding: 2rem;
+                margin-top: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .countdown {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <div class="logo">Onigiri</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#waitlist">Join Waitlist</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container" id="home">
+        <div class="hero">
+             <!-- Content -->
+             <div class="hero-content">
+                 <h1>Something <span class="highlight">rice-istible</span> is cooking!</h1>
+                <p>Get ready to join Ume and friends in our revolutionary Japanese learning platform! Follow these adorable characters through gamified adventures that make studying as addictive as your favorite game.</p>
+                
+                <div class="countdown-container">
+                    <div class="countdown-title">Launching in:</div>
+                    <div class="countdown" id="countdown">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days">30</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours">12</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes">45</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="seconds">30</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#waitlist" class="cta-button">
+                Get Early Access
+                </a>
+            </div>
+
+            <!-- Visual -->
+            <div class="hero-visual">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Waitlist Section -->
+    <section class="waitlist-section" id="waitlist">
+        <h2>Join the Rice Revolution!</h2>
+        <p>Be the first to experience the most delicious way to learn Japanese. Get notified when we launch!</p>
+        
+        <form class="waitlist-form" id="waitlistForm">
+            <input 
+                type="email" 
+                class="email-input" 
+                placeholder="Enter your email address"
+                required
+                id="emailInput"
+            >
+            <button type="submit" class="submit-btn">Join Waitlist</button>
+        </form>
+        
+        <div class="success-message" id="successMessage">
+            🎉 Awesome! You're on the list. We'll notify you as soon as we launch!
+        </div>
+    </section>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Countdown Timer
+        function updateCountdown() {
+            const launchDate = new Date();
+            launchDate.setDate(launchDate.getDate() + 30);
+            
+            const now = new Date();
+            const difference = launchDate.getTime() - now.getTime();
+            
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Waitlist form
+        const form = document.getElementById('waitlistForm');
+        const successMessage = document.getElementById('successMessage');
+        const emailInput = document.getElementById('emailInput');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            const submitBtn = form.querySelector('.submit-btn');
+            submitBtn.textContent = 'Joining...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                successMessage.style.display = 'block';
+                form.reset();
+                submitBtn.textContent = 'Join Waitlist';
+                submitBtn.disabled = false;
+                
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }, 1000);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
