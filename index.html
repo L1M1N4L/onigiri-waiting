@@ -32,7 +32,8 @@
              font-family: 'Poppins', sans-serif;
              background: var(--bg-cream);
              color: var(--text-dark);
-             overflow: hidden;
+             overflow-x: hidden;
+             overflow-y: auto;
              line-height: 1.6;
          }
         
@@ -127,13 +128,13 @@
          }
         
          .hero {
-             max-width: 1400px;
-             width: 100%;
-             display: grid;
-             grid-template-columns: 1.2fr 0.8fr;
-             gap: 4rem;
-             align-items: center;
-         }
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
         
         /* Content Section */
         .hero-content {
@@ -142,7 +143,7 @@
         
         
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-size: clamp(2.3rem, 5vw, 4rem);
             font-weight: 900;
             color: var(--primary-navy);
             margin-bottom: 2rem;
@@ -174,7 +175,7 @@
         }
         
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: var(--text-muted);
             margin-bottom: 3rem;
             font-weight: 400;
@@ -183,29 +184,30 @@
         
         /* Countdown */
         .countdown-container {
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         
-         .countdown-title {
-             font-size: 1.1rem;
+        .countdown-title {
+            font-size: 1.1rem;
              font-weight: 600;
              color: var(--primary-navy);
              margin-bottom: 1.5rem;
-             text-align: left;
+            text-align: left;
          }
         
          .countdown {
-             display: grid;
-             grid-template-columns: repeat(4, 1fr);
-             gap: 1.5rem;
-             max-width: 600px;
-         }
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 420px;
+            margin: 0;
+        }
         
         .countdown-item {
             background: var(--white);
             border: 3px solid rgba(229, 110, 12, 0.1);
             border-radius: var(--radius);
-            padding: 2rem 1rem;
+            padding: 1rem 0.5rem;
             text-align: center;
             transition: var(--transition);
             position: relative;
@@ -235,15 +237,15 @@
         
         .countdown-number {
             display: block;
-            font-size: 3rem;
+            font-size: 1.75rem;
             font-weight: 800;
             color: var(--primary-navy);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             font-variant-numeric: tabular-nums;
         }
         
         .countdown-label {
-            font-size: 1rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             font-weight: 500;
             text-transform: uppercase;
@@ -674,7 +676,6 @@
             <div class="logo">Onigiri</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#waitlist">Join Waitlist</a></li>
             </ul>
         </nav>
     </header>
@@ -688,22 +689,22 @@
                 <p>Get ready to join Ume and friends in our revolutionary Japanese learning platform! Follow these adorable characters through gamified adventures that make studying as addictive as your favorite game.</p>
                 
                 <div class="countdown-container">
-                    <div class="countdown-title">Launching in:</div>
+                    <div class="countdown-title">Launch Date: N/A</div>
                     <div class="countdown" id="countdown">
                         <div class="countdown-item">
-                            <span class="countdown-number" id="days">30</span>
+                            <span class="countdown-number" id="days">--</span>
                             <span class="countdown-label">Days</span>
                         </div>
                         <div class="countdown-item">
-                            <span class="countdown-number" id="hours">12</span>
+                            <span class="countdown-number" id="hours">--</span>
                             <span class="countdown-label">Hours</span>
                         </div>
                         <div class="countdown-item">
-                            <span class="countdown-number" id="minutes">45</span>
+                            <span class="countdown-number" id="minutes">--</span>
                             <span class="countdown-label">Minutes</span>
                         </div>
                         <div class="countdown-item">
-                            <span class="countdown-number" id="seconds">30</span>
+                            <span class="countdown-number" id="seconds">--</span>
                             <span class="countdown-label">Seconds</span>
                         </div>
                     </div>
@@ -721,19 +722,7 @@
         </div>
     </div>
 
-     <!-- Waitlist Section -->
-     <section class="waitlist-section" id="waitlist">
-         <h2>Join the Rice Revolution!</h2>
-         <p>Be the first to experience the most delicious way to learn Japanese. Get notified when we launch!</p>
-         
-         <div class="waitlist-form">
-             <a href="https://forms.gle/SUF8ZVDp94E5awZV7" target="_blank" class="submit-btn">
-                 🍙 Join Waitlist
-             </a>
-         </div>
-         
-         <p class="form-note">Click the button above to fill out our detailed signup form!</p>
-     </section>
+     
 
     <script>
         // Header scroll effect
@@ -746,29 +735,7 @@
             }
         });
 
-        // Countdown Timer
-        function updateCountdown() {
-            const launchDate = new Date();
-            launchDate.setDate(launchDate.getDate() + 30);
-            
-            const now = new Date();
-            const difference = launchDate.getTime() - now.getTime();
-            
-            if (difference > 0) {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                
-                document.getElementById('days').textContent = String(days).padStart(2, '0');
-                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-            }
-        }
-        
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        // Countdown disabled (no date yet)
 
 
     </script>
